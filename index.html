@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="img/logo-icons.svg" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Weather App</title>
+</head>
+<body>
+    <wrapper class="wrapper">
+        <section class="container">
+            <div class="search-form">
+                <label for="search-input" class="search-form__label">
+                    <img src="img/gps.svg" alt="gps" class="search-form__gps-img">
+                    <input type="text" class="search-form__input" id="search-input" placeholder="Введите название локации">
+                    <button type="submit" class="search-form__button">
+                        <img src="img/zoom.svg" alt="показать" class="search-form__button-img">
+                    </button>
+                </label>
+            </div>
+            <div class="weather-box">
+                <div class="weather-box-error">
+                    <img src="img/error404.svg" alt="error 404" class="weather-box-img">
+                    <p class="weather-box-error__text">Упс, неправильно введена страна или город</p>
+                </div>
+                <div class="weather-box-normal">
+                    <div class="weather-box-normal__current-temp">
+                        <img src="" class="weather-box-normal__current-temp-img">
+                        <p class="weather-box-normal__current-temp-value"></p>
+                        <p class="weather-box-normal__current-temp-text"><span></span></p>
+                    </div>
+                    <div class="weather-box-normal__container">
+                        <div class="weather-box-normal__current-humidity">
+                            <img src="img/humidity.svg" alt="влажность" class="weather-box-normal__current-humidity-img">
+                            <p class="weather-box-normal__current-humidity-value"><span></span>% Влажность</p>
+                        </div>
+                        <div class="weather-box-normal__wind-speed">
+                            <img src="img/wind.svg" alt="скорость ветра" class="weather-box-normal__wind-speed-img">
+                            <p class="weather-box-normal__wind-speed-value"><span></span> м/сек Скорость ветра</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </wrapper>
+    <script src="main.js"></script>
+</body>
+</html>

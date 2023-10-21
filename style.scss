@@ -1,0 +1,167 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgb(18, 85, 102);
+}
+.container {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 60px;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 16px;
+    transition: 0.5s ease-out;
+}
+.search-form {
+    width: 100%;
+        &__label {
+            display: flex;
+        }
+
+        &__gps-img {
+            width: 25px;
+        }
+
+        &__input {
+            width: 80%;
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 20px;
+            outline: none;
+        }
+        
+        &__input::placeholder {
+            font-size: 16px;
+        }
+
+        &__button {
+            width: 40px;
+            margin-left: 7px;
+            background: rgb(98, 196, 235);
+            border-radius: 25px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: 0.4s ease
+        }
+
+        &__button:hover {
+            opacity: 1;
+        }
+
+        &__button-img {
+            width: 25px;
+        }
+}
+
+.weather-box {
+    width: 100%;
+    opacity: 0;
+    scale: 0;
+}
+.weather-box-img {
+    width: 250px;
+}
+.weather-box-error {
+    display: none;
+    opacity: 0;
+    scale: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+		&__text {
+            text-align: center;
+            width: 200px;
+        }
+}
+.weather-box-normal {
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    scale: 0;
+		&__current-temp {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 16px;
+        }
+
+        &__current-temp-img {
+            width: 50%;
+        }
+
+        &__current-temp-value {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 16px 0;
+        }
+
+        &__current-temp-value span {
+            position: absolute;
+            margin-left: 4px;
+            font-size: 21px;
+        }
+
+        &__current-temp-text {
+            font-size: 18px;
+        }
+
+        &__container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+		&__current-humidity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+		&__current-humidity-img {
+            width: 25px;
+        }
+
+		&__current-humidity-value {
+            margin-left: 10px;
+            width: 100px;
+        }
+
+		&__wind-speed {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+		&__wind-speed-img {
+            width: 25px;
+        }
+
+		&__wind-speed-value {
+            margin-left: 10px;
+            width: 120px;
+        }
+}
+.fade-in {
+    animation: 0.5s fadeIn forwards;
+    animation-delay: 0.5s;
+}
+@keyframes fadeIn {
+    to {
+        scale: 1;
+        opacity: 1;
+    }
+}
