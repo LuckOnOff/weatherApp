@@ -13,14 +13,14 @@ const labelBlock = document.querySelector('.search-form__label');
 
 function searchLocation() {
     const apiKey = 'ddef709b3b5d7802c80cea203525df01';
-    const city = input.value;
+    const city = input.value.trim();;
 
     if(city === '')
         return;
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
-    .then(Response => Response.json()).then(json => {
-        console.log(json)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=ru`)
+    .then(Response => Response.json())
+    .then(json => {
         if(json.cod === '404') {
             container.style.height = '370px';
             error404.style.display = 'flex';
@@ -42,27 +42,21 @@ function searchLocation() {
         currentTemp.innerHTML = `${parseInt(json.main.temp)}<span> °C</span>`;
         currentHumidity.innerHTML = json.main.humidity;
         currentWindSpeed.innerHTML = json.wind.speed.toFixed(1);
+        tempTextSpan.innerHTML = json.weather[0].description;
 
         if(json.weather[0].id >= 200 && json.weather[0].id <= 232) {
-            tempTextSpan.innerHTML = 'Грозы';
             backGroundImg.src = 'img/thunderstorm.svg';
         }else if(json.weather[0].id >= 300 && json.weather[0].id <= 321) {
-            tempTextSpan.innerHTML = 'Морось';
             backGroundImg.src = 'img/drizzle.svg';
         }else if(json.weather[0].id >= 500 && json.weather[0].id <= 531) {
-            tempTextSpan.innerHTML = 'Дождь';
             backGroundImg.src = 'img/rain.svg';
           }else if(json.weather[0].id >= 600 && json.weather[0].id <= 622) {
-              tempTextSpan.innerHTML = 'Снег';
               backGroundImg.src = 'img/snow.svg';
           }else if(json.weather[0].id >= 701 && json.weather[0].id <= 781) {
-            tempTextSpan.innerHTML = 'Туман';
             backGroundImg.src = 'img/fog.svg';
         } else if(json.weather[0].id == 800) {
-            tempTextSpan.innerHTML = 'Ясно';
             backGroundImg.src = 'img/sun.svg';
         }else if(json.weather[0].id >= 801 && json.weather[0].id <= 804) {
-            tempTextSpan.innerHTML = 'Облачно';
             backGroundImg.src = 'img/sunCloud.svg';
         }
 

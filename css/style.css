@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .wrapper {
   display: flex;
   justify-content: center;
@@ -29,6 +33,7 @@
 
 .search-form {
   width: 100%;
+  position: relative;
 }
 .search-form__label {
   display: flex;
