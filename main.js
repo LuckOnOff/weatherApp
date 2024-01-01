@@ -9,23 +9,24 @@ const tempTextSpan = document.querySelector('.weather-box-normal__current-temp-t
 const currentHumidity = document.querySelector('.weather-box-normal__current-humidity-value span');
 const currentWindSpeed = document.querySelector('.weather-box-normal__wind-speed-value span');
 const backGroundImg = document.querySelector('.weather-box-normal__current-temp-img');
-const labelBlock = document.querySelector('.search-form__label');
 
 function searchLocation() {
     const apiKey = 'ddef709b3b5d7802c80cea203525df01';
-    const city = input.value.trim();;
+    const city = input.value.trim();
 
-    if(city === '')
+    if(city === '' || !isNaN(city)) {
         return;
+    }
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=ru`)
     .then(Response => Response.json())
     .then(json => {
+        console.log(json);
         if(json.cod === '404') {
             container.style.height = '370px';
             error404.style.display = 'flex';
             error404.classList.add('fade-in');
-            weatherBox.classList.add('fade-in');
+            container.classList.add('fade-in');
             weatherBoxNormal.style.display = 'none';
             return;
         }
@@ -36,7 +37,7 @@ function searchLocation() {
         container.style.height = '400px';
         weatherBoxNormal.style.display = 'flex';
         weatherBoxNormal.classList.add('fade-in');
-        weatherBox.classList.add('fade-in');
+        container.classList.add('fade-in');
 
 
         currentTemp.innerHTML = `${parseInt(json.main.temp)}<span> °C</span>`;
