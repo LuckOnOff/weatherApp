@@ -10,6 +10,23 @@ const currentHumidity = document.querySelector('.weather-box-normal__current-hum
 const currentWindSpeed = document.querySelector('.weather-box-normal__wind-speed-value span');
 const backGroundImg = document.querySelector('.weather-box-normal__current-temp-img');
 
+function errorBlock() {
+    container.style.height = '370px';
+    error404.style.display = 'flex';
+    error404.classList.add('fade-in');
+    container.classList.add('fade-in');
+    weatherBoxNormal.style.display = 'none';
+}
+
+function completeBlock() {
+    error404.style.display = 'none';
+    error404.classList.remove('fade-in');
+    container.style.height = '400px';
+    weatherBoxNormal.style.display = 'flex';
+    weatherBoxNormal.classList.add('fade-in');
+    container.classList.add('fade-in');
+}
+
 function searchLocation() {
     const apiKey = 'ddef709b3b5d7802c80cea203525df01';
     const city = input.value.trim();
@@ -19,49 +36,53 @@ function searchLocation() {
     }
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=ru`)
-    .then(Response => Response.json())
+    .then(response => response.json())
     .then(json => {
-        console.log(json);
         if(json.cod === '404') {
-            container.style.height = '370px';
-            error404.style.display = 'flex';
-            error404.classList.add('fade-in');
-            container.classList.add('fade-in');
-            weatherBoxNormal.style.display = 'none';
-            return;
+            return errorBlock(); // если запрос неверный
         }
 
-
-        error404.style.display = 'none';
-        error404.classList.remove('fade-in');
-        container.style.height = '400px';
-        weatherBoxNormal.style.display = 'flex';
-        weatherBoxNormal.classList.add('fade-in');
-        container.classList.add('fade-in');
-
+        completeBlock(); // если запрос верный
 
         currentTemp.innerHTML = `${parseInt(json.main.temp)}<span> °C</span>`;
-        currentHumidity.innerHTML = json.main.humidity;
-        currentWindSpeed.innerHTML = json.wind.speed.toFixed(1);
-        tempTextSpan.innerHTML = json.weather[0].description;
+        currentHumidity.textContent = json.main.humidity;
+        currentWindSpeed.textContent = json.wind.speed.toFixed(1);
+        tempTextSpan.textContent = json.weather[0].description;
 
-        if(json.weather[0].id >= 200 && json.weather[0].id <= 232) {
-            backGroundImg.src = 'img/thunderstorm.svg';
-        }else if(json.weather[0].id >= 300 && json.weather[0].id <= 321) {
-            backGroundImg.src = 'img/drizzle.svg';
-        }else if(json.weather[0].id >= 500 && json.weather[0].id <= 531) {
-            backGroundImg.src = 'img/rain.svg';
-          }else if(json.weather[0].id >= 600 && json.weather[0].id <= 622) {
-              backGroundImg.src = 'img/snow.svg';
-          }else if(json.weather[0].id >= 701 && json.weather[0].id <= 781) {
-            backGroundImg.src = 'img/fog.svg';
-        } else if(json.weather[0].id == 800) {
-            backGroundImg.src = 'img/sun.svg';
-        }else if(json.weather[0].id >= 801 && json.weather[0].id <= 804) {
-            backGroundImg.src = 'img/sunCloud.svg';
+        const weatherConditions = {
+            1: 'img/thunderstorm.svg',
+            2: 'img/drizzle.svg',
+            3: 'img/rain.svg',
+            4: 'img/snow.svg',
+            5: 'img/fog.svg',
+            6: 'img/sun.svg',
+            7: 'img/sunCloud.svg'
         }
-
+        
+        const weatherId = json.weather[0].id;
+        let weatherType;
+        
+        if (weatherId >= 200 && weatherId <= 232) {
+            weatherType = 1;
+        } else if (weatherId >= 300 && weatherId <= 321) {
+            weatherType = 2;
+        } else if (weatherId >= 500 && weatherId <= 531) {
+            weatherType = 3;
+        } else if (weatherId >= 600 && weatherId <= 622) {
+            weatherType = 4;
+        } else if (weatherId >= 701 && weatherId <= 781) {
+            weatherType = 5;
+        } else if (weatherId == 800) {
+            weatherType = 6;
+        } else if (weatherId >= 801 && weatherId <= 804) {
+            weatherType = 7;
+        }
+        
+        backGroundImg.src = weatherConditions[weatherType]; // отображение картинки погоды в зависимости от кода с сервера
     })
-
+    .catch(e => {
+        alert(`Извините, произошла непредвиденная ошибка: \n ${e}`);
+        errorBlock();
+    }); // обработка асинхронных ошибок
 };
 input.addEventListener('change', searchLocation);
